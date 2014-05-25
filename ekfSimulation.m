@@ -11,7 +11,7 @@ function ekfSimulation()
 %   SIMULATION PROPERTIES
 
 %   Simulation Steps <Feel Free to change this>
-simSteps=400;
+simSteps=200;
 
 %**************************************************************************
 %   ROBOT PROPERTIES
