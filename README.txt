@@ -11,7 +11,7 @@ GENERAL NOTES:
 
 This MATLAB simulator demonstrates how a 2-wheeled mobile robot
 localizes itself through the fusion of information using Extended 
-Kalman Filter. The information is provided by wheel encoders as
+Kalman Filter. The information is provided by simulated wheel encoders as
 well as distance and angular sensors.
 
 Tested in MATLAB 7.12.0.635 (R2011a) and MATLAB 7.14.0.739 (R2012a)
