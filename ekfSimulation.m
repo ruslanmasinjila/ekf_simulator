@@ -209,7 +209,7 @@ hold on;
 plot(x,mu_actual(:,3).*(180/pi),'gx');
 
 xlabel('Iterations');
-ylabel('Theta');
+ylabel('Theta (rad)');
 title('Robot Orientation');
 
 legend('EKF Orientation','Odometry Orientation','Actual Orientation');
