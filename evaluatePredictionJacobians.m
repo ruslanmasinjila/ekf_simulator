@@ -22,8 +22,8 @@ DR=ut(2);
 
 previousTheta=previousPose(3);
 
-G_mut(1,:)=[ 1, 0, -((DR+DL)/2)*sin(previousTheta - (DL - DR)/(2*b))];
-G_mut(2,:)=[ 0, 1,  ((DR+DL)/2)*cos(previousTheta - (DL - DR)/(2*b))];
+G_mut(1,:)=[ 1, 0, -((DR+DL)/2)*sin(previousTheta + (DR - DL)/(2*b))];
+G_mut(2,:)=[ 0, 1,  ((DR+DL)/2)*cos(previousTheta + (DR - DL)/(2*b))];
 G_mut(3,:)=[0 0 1];
 
 
