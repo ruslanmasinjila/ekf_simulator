@@ -9,8 +9,9 @@ function ekfSimulation()
 
 %**************************************************************************
 %   SIMULATION PROPERTIES
+%   ##CHANGE THESE VALUES FOR DIFFERENT RESULTS##
 
-%   Simulation Steps <Feel Free to change this>
+%   Simulation Steps
 simSteps=200;
 
 %**************************************************************************
@@ -24,11 +25,13 @@ b=0.5;
 %   Error in distance measurement
 sigma_rho=0.001;
 
-%   Error is angle measurement
+%   Error in angle measurement
 sigma_phi=0.1;
 
-%   S0 is used when estimating reltive position and orientation of the landmark
-%   S is to simulate actual, noisy measurement of the orientation and position of the landmark
+%   S0 is used when estimating relative position and orientation of the
+%   landmark.
+%   S is to simulate actual, noisy measurement of the orientation and
+%   position of the landmark w.r.t the robot
 S0=[0 0];
 S=[sigma_rho sigma_phi];
 Qt=getSensorCovariance(S);
@@ -56,7 +59,7 @@ DR=b;
 % third column=theta.
 
 % The expected pose is the pose of the robot determined using only internal
-% encoders assuming there are no noises. This is the "Perfect Pose"
+% encoders assuming there is no noise. This is the "Perfect Pose"
 mu_expected=zeros(simSteps,3);
 mu_expected(1,:)=[0 0 pi];
 
@@ -67,7 +70,7 @@ mu_actual=mu_expected;
 % mu is the filtered pose
 mu=mu_expected;
 
-%   Keeps track of the total distance covered in X and Y axix
+% Keeps track of the total distance covered in X and Y axix
 totalDL=0;
 totalDR=0;
 distanceCovered=struct;
@@ -101,11 +104,11 @@ for t=2:simSteps
     %   Place a landmark within 10 meters of the new positon of the robot
     landmarkPose=[mu_actual(1)+10, mu_actual(2)+10];
     
+    %***********************************
     %   NOISLESS MOTION
     %   Estimate Noiseless Pose from odometry
     
-    ut=[DL DR];
-    
+    ut=[DL DR];    
     
     %   Compute the current noiseless pose from previous noiseless Pose
     mu_expected(t,:)=estimateOdometryPose(b,mu_expected(t-1,:),ut);
@@ -113,12 +116,12 @@ for t=2:simSteps
     %   Estimate the predicted (priori) state of the robot  from previous filtered pose and control input ut
     mu_bar=estimateOdometryPose(b,mu(t-1,:),ut);
     
-    %   Compute the Partial Derivatives w.r.t control input(G_ut) and w.r.t previous
-    %   expectedPose (G_mut).
+    %   Compute the partial derivatives of the predicted state w.r.t control input(G_ut) and w.r.t previous
+    %   corrected state (G_mut).
     [G_mut, G_ut]=evaluatePredictionJacobians(b,mu(t-1,:),ut);
     
     
-    %   Determine the covariance Matrix of the wheel odometers
+    %   Determine the covariance Matrix of the wheel encoders
     Rt=getOdometryCovariance(ut,K);
     
     %   Estimate the predicted (priori) Covariance (Sigma Bar)
@@ -134,13 +137,14 @@ for t=2:simSteps
     %   Estimate Z_diff
     Z_diff=evaluateRelativePoseDifference(Z,Z_bar);
     
-    %   Estimate Hr
+    %   Estimate the partial derivative of the observation/measurement w.r.t to
+    %   predicted state (priori)
     Hr=evaluateMeasurementJacobians(mu_bar, landmarkPose);
     
     %   Calculate innovation (residula) covariance
     S=  ((Hr)*(sigma_bar)*(Hr')+Qt);
     
-    %   Calculate Kgain
+    %   Calculate Kalman Gain (Kgain)
     Kgain=  ((sigma_bar)*(Hr'))/S;
     
     %   Update mean

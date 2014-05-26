@@ -8,20 +8,17 @@ function [Z] = estimateRelativePose(robotPose,landmarkPose,S)
 %   Otherwise:      Simulates the actual, noisy distance and angle of landmarkPose w.r.t robot (Z)
 
 %   INPUT:
-%   Position (mu=[x y theta])
+%   Robot Pose (mu=[x y theta])
 %   Landmark Position (landmarkPose=[x y])
 %   Sensor covariances (S=[sigma_rho sigma_phi])
 %                       sigma_rho~Distance error
 %                       sigma_phi~Angle error
 
 %   OUTPUT
-%   When S=[0 0]:   Estimatd relative Pose (Z_bar)
+%   When S=[0 0]:   Estimated relative Pose (Z_bar)
 %   Otherwise:      Simulated, actual, noisy Pose (Z)
 
 %   BEGIN
-
-%******************************************************************
-%   Estimate the relative pose w.r.t robot
 
 sigma_rho=S(1);
 sigma_phi=S(2);
@@ -44,5 +41,6 @@ phi=normalizeAngle(phi);
 
 Z=[rho;phi];
 
+%   END
 end
 
