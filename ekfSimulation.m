@@ -102,7 +102,7 @@ for t=2:simSteps
     mu_actual(t,:)=estimateOdometryPose(b,mu_actual(t-1,:),noisyUt);
     
     %   Place a landmark within 10 meters of the new positon of the robot
-    landmarkPose=[mu_actual(1)+10, mu_actual(2)+10];
+    landmarkPose=[mu_actual(t,1)+10, mu_actual(t,2)+10];
     
     %***********************************
     %   NOISLESS MOTION

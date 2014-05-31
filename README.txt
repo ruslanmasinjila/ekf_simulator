@@ -21,5 +21,5 @@ RUNNING THE SIMULATOR:
 Execute the RunMe.mat file
 **************************************************
 Link to EKF Algorithm
-https://www.dropbox.com/s/9xfu8vtsj2f80ev/ekf_algorithm.pdf
+https://bytebucket.org/ruslanmasinjila/ekf_algorithm/raw/e1a39c8c014b47f67d030a4c43861f16ae95de02/ekf_algorithm.pdf?token=1723c05cc708b96d3e8ea2a3036a5ebaa9218c38
 **************************************************
